@@ -3,7 +3,6 @@ package lk.jiat.ee.ejb.bean;
 import lk.jiat.ee.core.model.Bid;
 import lk.jiat.ee.core.model.Product;
 import lk.jiat.ee.core.model.User;
-import lk.jiat.ee.core.model.bidPlacedEvent;
 import lk.jiat.ee.ejb.remote.DataStorage;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
@@ -29,7 +28,7 @@ public class DataStorageBean implements DataStorage {
         userList.add(new User(2,"nimal","nimal5@gmail.com","456"));
 
         productList.add(new Product(1,"ZTE Blade A35","https://lasermobile.lk/wp-content/uploads/2024/11/ZTE-BLADE-A35-520x510.jpg",400.00,new Date(), new ArrayList<Bid>()));
-        productList.add(new Product(2,"samsung galaxy a06","https://dialcom.lk/wp-content/uploads/lkkj-430x430.jpg",4800.00,new Date()));
+        productList.add(new Product(2,"samsung galaxy a06","https://dialcom.lk/wp-content/uploads/lkkj-430x430.jpg",4800.00,new Date(), new ArrayList<Bid>()));
 
     }
 

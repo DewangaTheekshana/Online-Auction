@@ -14,13 +14,13 @@ public class Product {
 
     private final ArrayList<Bid> bidPlacedEvent;
 
-    public Product(ArrayList<Bid> bidPlacedEvent, Date endTime, double basePrice, String image, String name, int id) {
-        this.bidPlacedEvent = bidPlacedEvent;
-        this.endTime = endTime;
-        this.basePrice = basePrice;
-        this.image = image;
-        this.name = name;
+    public Product(int id, String name, String image, double basePrice, Date endTime, ArrayList<Bid> bidPlacedEvent) {
         this.id = id;
+        this.name = name;
+        this.image = image;
+        this.basePrice = basePrice;
+        this.endTime = endTime;
+        this.bidPlacedEvent = bidPlacedEvent;
     }
 
     public int getId() {
