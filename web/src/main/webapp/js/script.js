@@ -58,8 +58,37 @@ async function loadProduct() {
             ProductCloneHtml.querySelector("#product-time").innerHTML = "2d 1h";
             ProductCloneHtml.querySelector("#product-name").innerHTML = item.name;
             ProductCloneHtml.querySelector("#product-bid-price").innerHTML = "$" + item.basePrice;
+            ProductCloneHtml.querySelector("#product-a1").href = "single_product.jsp?id=" + item.id;
 
             document.getElementById("product-main").appendChild(ProductCloneHtml);
         });
+    }
+}
+
+
+async  function loadSingleProduct(){
+
+    const parameters = new URLSearchParams(window.location.search);
+
+    if (parameters.has("id")) {
+        const productId = parameters.get("id");
+
+        const response = await  fetch("/ee-app/LoadToSingleProduct?id=" + productId);
+
+        if (response.ok) {
+
+            const json = await response.json();  // Assuming response is fetched correctly
+            console.log(json);
+
+            document.getElementById("main-image").src = json.product.image;
+            document.getElementById("single-product-title").innerHTML = json.product.name;
+            document.getElementById("start-bid").innerHTML = "$" + json.product.basePrice;
+
+        } else {
+
+        }
+
+    } else {
+
     }
 }

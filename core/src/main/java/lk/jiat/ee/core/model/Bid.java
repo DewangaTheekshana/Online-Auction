@@ -4,41 +4,40 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Bid implements Serializable {
-    private int userId;
-    private double amount;
-    private Date time;
+    private Integer userId;
+    private double bidAmount;
+    private Integer productId;
 
     public Bid() {
     }
 
-    public Bid(int userId, double amount, Date time) {
+    public Bid(Integer userId, double bidAmount, Integer productId) {
         this.userId = userId;
-        this.amount = amount;
-        this.time = time;
+        this.bidAmount = bidAmount;
+        this.productId = productId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getBidAmount() {
+        return bidAmount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setBidAmount(double bidAmount) {
+        this.bidAmount = bidAmount;
     }
 
-    public Date getTime() {
-        return time;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
-
 }

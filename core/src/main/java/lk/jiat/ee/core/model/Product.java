@@ -2,6 +2,7 @@ package lk.jiat.ee.core.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Product {
 
@@ -11,15 +12,15 @@ public class Product {
     private double basePrice;
     private Date endTime;
 
-    public Product(int id, String name, String image, double basePrice, Date endTime) {
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.basePrice = basePrice;
-        this.endTime = endTime;
-    }
+    private final ArrayList<Bid> bidPlacedEvent;
 
-    public Product() {
+    public Product(ArrayList<Bid> bidPlacedEvent, Date endTime, double basePrice, String image, String name, int id) {
+        this.bidPlacedEvent = bidPlacedEvent;
+        this.endTime = endTime;
+        this.basePrice = basePrice;
+        this.image = image;
+        this.name = name;
+        this.id = id;
     }
 
     public int getId() {
@@ -60,5 +61,9 @@ public class Product {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public List<Bid> getBidPlacedEvent() {
+        return bidPlacedEvent;
     }
 }
