@@ -83,6 +83,7 @@ async  function loadSingleProduct(){
             document.getElementById("main-image").src = json.product.image;
             document.getElementById("single-product-title").innerHTML = json.product.name;
             document.getElementById("start-bid").innerHTML = "$" + json.product.basePrice;
+            document.getElementById("currunt-bid-price").innerHTML = "$" + json.product.maxBid;
 
         } else {
 
@@ -90,5 +91,42 @@ async  function loadSingleProduct(){
 
     } else {
 
+    }
+}
+
+
+
+
+const socket = new WebSocket("ws://" + window.location.host + "/ee-app/bidsocket");
+
+// This is triggered when a message is received from the server
+socket.onmessage = function(event) {
+    const bid = JSON.parse(event.data);
+    document.getElementById("messages").innerText = "Current Bid: $" + bid.bidAmount;
+};
+
+async function sendMessage() {
+
+
+    const bidAmount = document.getElementById("manual-bid-amount").value;
+    const productId = 1; // Replace with actual product ID
+
+    const bidData = new URLSearchParams();
+    bidData.append("bidAmount", parseFloat(bidAmount));
+    bidData.append("productId", productId);
+
+    console.log(bidAmount);
+    console.log(productId);
+
+    const response = await fetch("PlaceBidServlet", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: bidData.toString()
+    });
+
+    if (response.ok){
+        alert(response);
     }
 }

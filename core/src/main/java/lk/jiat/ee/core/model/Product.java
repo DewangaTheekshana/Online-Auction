@@ -11,15 +11,16 @@ public class Product {
     private String image;
     private double basePrice;
     private Date endTime;
-
+    private double maxBid;
     private final ArrayList<Bid> bidPlacedEvent;
 
-    public Product(int id, String name, String image, double basePrice, Date endTime, ArrayList<Bid> bidPlacedEvent) {
+    public Product(int id, String name, String image, double basePrice, Date endTime, double maxBid, ArrayList<Bid> bidPlacedEvent) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.basePrice = basePrice;
         this.endTime = endTime;
+        this.maxBid = maxBid;
         this.bidPlacedEvent = bidPlacedEvent;
     }
 
@@ -61,6 +62,14 @@ public class Product {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public double getMaxBid() {
+        return maxBid;
+    }
+
+    public void setMaxBid(double maxBid) {
+        this.maxBid = maxBid;
     }
 
     public List<Bid> getBidPlacedEvent() {

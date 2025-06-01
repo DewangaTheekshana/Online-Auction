@@ -121,7 +121,7 @@
                 <div class="info-grid">
                     <div class="info-item">
                         <h4>Current Bid</h4>
-                        <p>$8,450</p>
+                        <p id="currunt-bid-price">$8,450</p>
                     </div>
                     <div class="info-item">
                         <h4>Starting Bid</h4>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="current-bid-value">$8,450</div>
+                <div class="current-bid-value" id="currunt-bid-price">$8,450</div>
 
                 <div class="bid-tabs">
                     <div class="tab active" data-tab="manual-bid">Manual Bid</div>
@@ -140,12 +140,12 @@
                 <div class="tab-content active" id="manual-bid">
                     <div class="bid-form">
                         <div class="form-group">
-                            <label for="manual-bid-amount">Enter Your Bid (Minimum $8,700)</label>
+                            <label for="manual-bid-amount" id="messages">Enter Your Bid (Minimum $8,700)</label>
                             <input type="number" id="manual-bid-amount" min="8700" value="8700">
                             <div class="form-note">Your bid must be at least $250 more than the current bid</div>
                         </div>
                         <div class="bid-actions">
-                            <button class="btn btn-accent">Place Bid Now</button>
+                            <button class="btn btn-accent" onclick="sendMessage();">Place Bid Now</button>
                         </div>
                     </div>
                 </div>

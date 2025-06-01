@@ -27,8 +27,8 @@ public class DataStorageBean implements DataStorage {
         userList.add(new User(1,"kamal","kamal@gmail.com","123"));
         userList.add(new User(2,"nimal","nimal5@gmail.com","456"));
 
-        productList.add(new Product(1,"ZTE Blade A35","https://lasermobile.lk/wp-content/uploads/2024/11/ZTE-BLADE-A35-520x510.jpg",400.00,new Date(), new ArrayList<Bid>()));
-        productList.add(new Product(2,"samsung galaxy a06","https://dialcom.lk/wp-content/uploads/lkkj-430x430.jpg",4800.00,new Date(), new ArrayList<Bid>()));
+        productList.add(new Product(1,"ZTE Blade A35","https://lasermobile.lk/wp-content/uploads/2024/11/ZTE-BLADE-A35-520x510.jpg",400.00,new Date(),500, new ArrayList<Bid>()));
+        productList.add(new Product(2,"samsung galaxy a06","https://dialcom.lk/wp-content/uploads/lkkj-430x430.jpg",4800.00,new Date(),5000, new ArrayList<Bid>()));
 
     }
 

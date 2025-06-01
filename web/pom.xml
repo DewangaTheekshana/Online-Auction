@@ -37,6 +37,12 @@
             <artifactId>gson</artifactId>
             <version>2.10.1</version>
         </dependency>
+        <dependency>
+            <groupId>jakarta.websocket</groupId>
+            <artifactId>jakarta.websocket-api</artifactId>
+            <version>2.1.1</version> <!-- latest for Jakarta EE 10 -->
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
