@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="current-bid-value" id="currunt-bid-price">$8,450</div>
+                <div class="current-bid-value" id="currunt-bid-price1"><p>$8,450</p></div>
 
                 <div class="bid-tabs">
                     <div class="tab active" data-tab="manual-bid">Manual Bid</div>
@@ -173,6 +173,8 @@
 
     <div class="bid-history">
         <h3 class="history-title">Bid History <span>24 bids so far</span></h3>
+
+        <ul id="bid-history"></ul>
 
         <div class="history-item">
             <div class="bidder-info">

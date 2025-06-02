@@ -65,6 +65,7 @@ async function loadProduct() {
     }
 }
 
+var pid = 0;
 
 async  function loadSingleProduct(){
 
@@ -84,14 +85,18 @@ async  function loadSingleProduct(){
             document.getElementById("single-product-title").innerHTML = json.product.name;
             document.getElementById("start-bid").innerHTML = "$" + json.product.basePrice;
             document.getElementById("currunt-bid-price").innerHTML = "$" + json.product.maxBid;
+            document.getElementById("currunt-bid-price1").innerHTML = "$" + json.product.maxBid;
+            pid = json.product.id;
 
         } else {
-
+            alert("unsuccess");
         }
 
     } else {
-
+        alert("Select Product");
     }
+
+    loadBidHistory();
 
     const socket = new WebSocket(`ws://${window.location.host}/ee-app/bidsocket`);
 
@@ -106,8 +111,39 @@ async  function loadSingleProduct(){
         console.log("Message from server:", event.data);
         console.log("socket on message"+ bid);
         document.getElementById("currunt-bid-price").innerText = "$" + bid.bidAmount;
+        document.getElementById("currunt-bid-price1").innerText = "$" + bid.bidAmount;
+
+        const listItem = document.createElement("li");
+        listItem.textContent = `User ${bid.userId} bid $${bid.bidAmount}`;
+        const history = document.getElementById("bid-history");
+        history.prepend(listItem); // add to top
+        loadBidHistory();
     };
 
+}
+
+function loadBidHistory() {
+    fetch(`/ee-app/bid-history?productId=${pid}`)
+        .then(response => response.json())
+        .then(bids => {
+            console.log("resbid"+bids);
+            const historyDiv = document.getElementById('bid-history');
+            historyDiv.innerHTML = ''; // Clear previous content
+
+            if (bids.length === 0) {
+                historyDiv.innerHTML = "<p>No bids yet.</p>";
+                return;
+            }
+
+            bids.forEach(bid => {
+                const entry = document.createElement('div');
+                entry.textContent = `User ${bid.userId} placed $${bid.bidAmount}`;
+                historyDiv.appendChild(entry);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading bid history:", error);
+        });
 }
 
 async function sendMessage() {

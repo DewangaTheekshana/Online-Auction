@@ -21,7 +21,7 @@ public class Product {
         this.image = image;
         this.basePrice = basePrice;
         this.endTime = endTime;
-        this.maxBid = startBid;
+        this.maxBid = basePrice;
         this.bidPlacedEvent = bidPlacedEvent;
     }
 
