@@ -32,7 +32,12 @@ public class BidSaveBean implements RemoteBidSave {
             return;
         }
 
-        product.setMaxBid(bidAmount);
+
+        product.getBidPlacedEvent().add(new Bid(productId, bidAmount, userId));
+
+        dataStorage.replaceProducts(product);
+
+        System.out.println("Updated product stored. MaxBid: " + product.getMaxBid());
 
     }
 }

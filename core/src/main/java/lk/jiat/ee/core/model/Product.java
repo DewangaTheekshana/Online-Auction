@@ -72,7 +72,7 @@ public class Product {
         this.maxBid = maxBid;
     }
 
-    public List<Bid> getBidPlacedEvent() {
+    public ArrayList<Bid> getBidPlacedEvent() {
         return bidPlacedEvent;
     }
 }

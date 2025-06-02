@@ -47,4 +47,10 @@ public class DataStorageBean implements DataStorage {
         return productList.stream().filter(product -> product.getId() == id).findFirst().orElse(null);
     }
 
+    @Override
+    public void replaceProducts(Product updatedProduct) {
+        productList.add(updatedProduct.getId(), updatedProduct);
+        System.out.println("data storage bean"+updatedProduct);
+    }
+
 }

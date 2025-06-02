@@ -102,6 +102,7 @@ const socket = new WebSocket("ws://" + window.location.host + "/ee-app/bidsocket
 // This is triggered when a message is received from the server
 socket.onmessage = function(event) {
     const bid = JSON.parse(event.data);
+    console.log("socket on message");
     document.getElementById("messages").innerText = "Current Bid: $" + bid.bidAmount;
 };
 
@@ -126,7 +127,7 @@ async function sendMessage() {
         body: bidData.toString()
     });
 
-    if (response.ok){
-        alert(response);
-    }
+    const responseText = await response.text();
+
+    alert(responseText);
 }

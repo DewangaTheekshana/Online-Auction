@@ -32,5 +32,7 @@ public class PlaceBidService extends HttpServlet {
         System.out.println(user.getEmail());
         remoteBidSave.placeBid(Integer.parseInt(productId),Double.parseDouble(bid),user.getId());
 
+        resp.getWriter().write("success");
+
     }
 }
