@@ -92,19 +92,23 @@ async  function loadSingleProduct(){
     } else {
 
     }
-}
+
+    const socket = new WebSocket(`ws://${window.location.host}/ee-app/bidsocket`);
 
 
-
-
-const socket = new WebSocket("ws://" + window.location.host + "/ee-app/bidsocket");
+    socket.onopen = ()=>{
+        console.log("Connected to WebSocket");
+    }
 
 // This is triggered when a message is received from the server
-socket.onmessage = function(event) {
-    const bid = JSON.parse(event.data);
-    console.log("socket on message");
-    document.getElementById("messages").innerText = "Current Bid: $" + bid.bidAmount;
-};
+    socket.onmessage = function(event) {
+        const bid = JSON.parse(event.data);
+        console.log("Message from server:", event.data);
+        console.log("socket on message"+ bid);
+        document.getElementById("currunt-bid-price").innerText = "$" + bid.bidAmount;
+    };
+
+}
 
 async function sendMessage() {
 
@@ -129,5 +133,4 @@ async function sendMessage() {
 
     const responseText = await response.text();
 
-    alert(responseText);
 }

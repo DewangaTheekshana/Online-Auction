@@ -1,18 +1,13 @@
 package lk.jiat.ee.web.websocket;
 
-import jakarta.ejb.EJB;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
+import lk.jiat.ee.core.websocket.BidBroadcaster;
 
 @ServerEndpoint("/bidsocket")
 public class BidWebSocket {
 
-    private static BidBroadcaster broadcaster;
-
-    @EJB
-    public void setBroadcaster(BidBroadcaster b) {
-        broadcaster = b;
-    }
+    private static final BidBroadcaster broadcaster = new BidBroadcaster();
 
     @OnOpen
     public void onOpen(Session session) {
@@ -27,8 +22,6 @@ public class BidWebSocket {
     }
 
     public static void broadcastToAll(String message) {
-        if (broadcaster != null) {
-            broadcaster.broadcast(message);
-        }
+        broadcaster.broadcast(message);
     }
 }

@@ -30,13 +30,13 @@ public class LoadProduct extends HttpServlet {
 
         Gson gson = new Gson();
 
-        for (Product product : products) {
-                    product.getId();
-                    product.getName();
-                    product.getImage();
-                    product.getBasePrice();
-                    product.getEndTime();
-        }
+//        for (Product product : products) {
+//                    product.getId();
+//                    product.getName();
+//                    product.getImage();
+//                    product.getBasePrice();
+//                    product.getEndTime();
+//        }
 
         JsonObject jsonObject = new JsonObject();
 
