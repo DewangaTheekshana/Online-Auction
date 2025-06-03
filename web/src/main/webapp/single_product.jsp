@@ -79,22 +79,23 @@
 
             <div class="countdown">
                 <div class="countdown-item">
-                    <div class="countdown-value" id="days">02</div>
+                    <div class="countdown-value" id="days">00</div>
                     <div class="countdown-label">Days</div>
                 </div>
                 <div class="countdown-item">
-                    <div class="countdown-value" id="hours">14</div>
+                    <div class="countdown-value" id="hours">00</div>
                     <div class="countdown-label">Hours</div>
                 </div>
                 <div class="countdown-item">
-                    <div class="countdown-value" id="minutes">32</div>
+                    <div class="countdown-value" id="minutes">00</div>
                     <div class="countdown-label">Minutes</div>
                 </div>
                 <div class="countdown-item">
-                    <div class="countdown-value" id="seconds">18</div>
+                    <div class="countdown-value" id="seconds">00</div>
                     <div class="countdown-label">Seconds</div>
                 </div>
             </div>
+
 
             <div class="bid-meta">
                 <div class="meta-item">
@@ -142,10 +143,14 @@
                         <div class="form-group">
                             <label for="manual-bid-amount" id="messages">Enter Your Bid (Minimum $8,700)</label>
                             <input type="number" id="manual-bid-amount" min="8700" value="8700">
-                            <div class="form-note">Your bid must be at least $250 more than the current bid</div>
+                            <div class="form-note">Your bid must be at least 10 more than the current bid</div>
                         </div>
                         <div class="bid-actions">
-                            <button class="btn btn-accent" onclick="sendMessage();">Place Bid Now</button>
+                            <% if (user == null) { %>
+                                <button class="btn btn-accent" id="bidbutton" onclick="notloging();">Place Bid Now</button>
+                            <% } else { %>
+                                <button class="btn btn-accent" id="bidbutton" onclick="sendMessage();">Place Bid Now</button>
+                            <% } %>
                         </div>
                     </div>
                 </div>
@@ -173,9 +178,7 @@
 
     <div class="bid-history">
         <h3 class="history-title">Bid History <span>24 bids so far</span></h3>
-
-        <ul id="bid-history"></ul>
-
+        <div id="bid-history">
         <div class="history-item">
             <div class="bidder-info">
                 <div class="bidder-avatar">JD</div>
@@ -186,49 +189,6 @@
             </div>
             <div class="bid-amount">$8,450</div>
         </div>
-
-        <div class="history-item">
-            <div class="bidder-info">
-                <div class="bidder-avatar">MS</div>
-                <div>
-                    <div class="bidder-name">Mary Smith</div>
-                    <div class="bid-time">Today, 12:15</div>
-                </div>
-            </div>
-            <div class="bid-amount">$8,200</div>
-        </div>
-
-        <div class="history-item">
-            <div class="bidder-info">
-                <div class="bidder-avatar">RJ</div>
-                <div>
-                    <div class="bidder-name">Robert Johnson <span class="auto-bid-tag">Auto-Bid</span></div>
-                    <div class="bid-time">Yesterday, 18:43</div>
-                </div>
-            </div>
-            <div class="bid-amount">$7,950</div>
-        </div>
-
-        <div class="history-item">
-            <div class="bidder-info">
-                <div class="bidder-avatar">AW</div>
-                <div>
-                    <div class="bidder-name">Amanda Wilson</div>
-                    <div class="bid-time">Yesterday, 15:22</div>
-                </div>
-            </div>
-            <div class="bid-amount">$7,700</div>
-        </div>
-
-        <div class="history-item">
-            <div class="bidder-info">
-                <div class="bidder-avatar">TP</div>
-                <div>
-                    <div class="bidder-name">Thomas Parker <span class="auto-bid-tag">Auto-Bid</span></div>
-                    <div class="bid-time">2 days ago, 09:47</div>
-                </div>
-            </div>
-            <div class="bid-amount">$7,450</div>
         </div>
     </div>
 </div>
@@ -281,55 +241,6 @@
 </footer>
 
 <script>
-    // Thumbnail Gallery
-    document.querySelectorAll('.thumbnail').forEach(thumb => {
-        thumb.addEventListener('click', function() {
-            // Update main image
-            document.getElementById('main-image').src = this.dataset.src;
-
-            // Update active class
-            document.querySelectorAll('.thumbnail').forEach(t => {
-                t.classList.remove('active');
-            });
-            this.classList.add('active');
-        });
-    });
-
-    // Countdown Timer
-    function updateCountdown() {
-        // Set end time (3 days from now)
-        const endTime = new Date();
-        endTime.setDate(endTime.getDate() + 2);
-        endTime.setHours(endTime.getHours() + 14);
-        endTime.setMinutes(endTime.getMinutes() + 32);
-        endTime.setSeconds(endTime.getSeconds() + 18);
-
-        const now = new Date();
-        const diff = endTime - now;
-
-        if (diff <= 0) {
-            document.getElementById('days').textContent = '00';
-            document.getElementById('hours').textContent = '00';
-            document.getElementById('minutes').textContent = '00';
-            document.getElementById('seconds').textContent = '00';
-            return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('days').textContent = days.toString().padStart(2, '0');
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-    }
-
-    // Update countdown every second
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
     // Bid form tabs
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', function() {
@@ -346,70 +257,6 @@
                 content.classList.remove('active');
             });
             document.getElementById(tabId).classList.add('active');
-        });
-    });
-
-    // Manual bid form
-    const manualBidForm = document.querySelector('#manual-bid .bid-form');
-    const manualBidInput = document.getElementById('manual-bid-amount');
-
-    manualBidForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const bidAmount = parseFloat(manualBidInput.value);
-        const minBid = 8700;
-
-        if (bidAmount < minBid) {
-            alert(`Your bid must be at least $${minBid}`);
-            return;
-        }
-
-        // In a real app, this would submit to a server
-        alert(`Manual bid of $${bidAmount} placed successfully!`);
-
-        // Reset form
-        manualBidInput.value = minBid + 250;
-    });
-
-    // Auto bid form
-    const autoBidForm = document.querySelector('#auto-bid .bid-form');
-    const autoBidInput = document.getElementById('auto-bid-amount');
-
-    autoBidForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const maxBid = parseFloat(autoBidInput.value);
-        const minBid = 8700;
-
-        if (maxBid < minBid) {
-            alert(`Your maximum bid must be at least $${minBid}`);
-            return;
-        }
-
-        // In a real app, this would submit to a server
-        alert(`Auto-bid activated! We'll bid for you up to $${maxBid}`);
-
-        // Reset form
-        autoBidInput.value = maxBid;
-    });
-
-    // Add to watchlist
-    const watchlistBtns = document.querySelectorAll('.btn-outline');
-    watchlistBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            this.textContent = '✓ Added to Watchlist';
-            this.style.backgroundColor = '#28a745';
-            this.style.borderColor = '#28a745';
-            this.style.color = 'white';
-
-            // Reset after 2 seconds
-            setTimeout(() => {
-                this.textContent = 'Add to Watchlist';
-                this.style.backgroundColor = '';
-                this.style.borderColor = '';
-                this.style.color = '';
-            }, 2000);
         });
     });
 </script>

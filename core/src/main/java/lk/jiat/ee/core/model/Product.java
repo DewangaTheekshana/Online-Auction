@@ -12,7 +12,6 @@ public class Product {
     private double basePrice;
     private Date endTime;
     private double maxBid;
-    private double startBid;
     private final ArrayList<Bid> bidPlacedEvent;
 
     public Product(int id, String name, String image, double basePrice, Date endTime, ArrayList<Bid> bidPlacedEvent) {
@@ -71,14 +70,6 @@ public class Product {
 
     public void setMaxBid(double maxBid) {
         this.maxBid = maxBid;
-    }
-
-    public double getStartBid() {
-        return startBid;
-    }
-
-    public void setStartBid(double startBid) {
-        this.startBid = startBid;
     }
 
     public ArrayList<Bid> getBidPlacedEvent() {

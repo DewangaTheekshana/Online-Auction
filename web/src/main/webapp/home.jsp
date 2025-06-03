@@ -82,8 +82,7 @@
             <div class="auction-card" id="product">
                 <div class="card-img">
                     <img id="product-image1" src="" alt="Rolex Watch">
-                    <div class="time-left"><i class="fas fa-clock"></i>2d 14h</div>
-                    <div class="time-left" id="product-time"><i class="fas fa-clock">2d 14h</i></div>
+                    <div class="time-left" id="product-time"><i class="fas fa-clock"></i></div>
                 </div>
                 <div class="card-content">
                     <h3 class="card-title" id="product-name">Vintage Rolex Submariner</h3>

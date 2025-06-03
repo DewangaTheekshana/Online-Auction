@@ -23,6 +23,8 @@ public class BidNotificationBean implements MessageListener {
                 if (obj instanceof Bid) {
                     Bid bid = (Bid) obj;
 
+                    System.out.println("Bid: " + bid.getUserId());
+
                     // Create a simple message to send to clients
                     String notification = String.format(
                             "{\"productId\": %d, \"bidAmount\": %.2f, \"userId\": %d}",

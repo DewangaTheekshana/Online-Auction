@@ -56,7 +56,7 @@ public class BidSaveBean implements RemoteBidSave {
         // Send JMS message
         try (JMSContext context = connectionFactory.createContext()) {
             context.createProducer().send(topic, new Bid(productId, bidAmount, userId));
-            System.out.println("Bid broadcasted via JMS.");
+            System.out.println("Bid broadcasted via JMS." + userId);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to broadcast bid.");

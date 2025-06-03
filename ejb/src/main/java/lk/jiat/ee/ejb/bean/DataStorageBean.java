@@ -24,11 +24,11 @@ public class DataStorageBean implements DataStorage {
 
         userList = new ArrayList<User>();
         productList = new ArrayList<Product>();
-        userList.add(new User(1,"kamal","kamal@gmail.com","123"));
-        userList.add(new User(2,"nimal","nimal5@gmail.com","456"));
+        userList.add(new User(1,"kamal Perera","kamal@gmail.com","123"));
+        userList.add(new User(2,"nimal Perera","nimal5@gmail.com","456"));
 
-        productList.add(new Product(1,"ZTE Blade A35","https://lasermobile.lk/wp-content/uploads/2024/11/ZTE-BLADE-A35-520x510.jpg",400.00,new Date(), new ArrayList<Bid>()));
-        productList.add(new Product(2,"samsung galaxy a06","https://dialcom.lk/wp-content/uploads/lkkj-430x430.jpg",4800.00,new Date(), new ArrayList<Bid>()));
+        productList.add(new Product(1,"ZTE Blade A35","https://lasermobile.lk/wp-content/uploads/2024/11/ZTE-BLADE-A35-520x510.jpg",400.00,new Date(System.currentTimeMillis() + 0 * 00 * 60 * 1000), new ArrayList<Bid>()));
+        productList.add(new Product(2,"samsung galaxy a06","https://dialcom.lk/wp-content/uploads/lkkj-430x430.jpg",4800.00,new Date(System.currentTimeMillis() + 3 * 60 * 60 * 1000), new ArrayList<Bid>()));
 
     }
 
@@ -45,6 +45,11 @@ public class DataStorageBean implements DataStorage {
     @Override
     public Product getProductById(int id) {
         return productList.stream().filter(product -> product.getId() == id).findFirst().orElse(null);
+    }
+
+    @Override
+    public User getUserById(int userId) {
+        return userList.stream().filter(user -> user.getId() == userId).findFirst().orElse(null);
     }
 
     @Override

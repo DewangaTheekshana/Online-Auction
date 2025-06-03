@@ -28,6 +28,7 @@ public class PlaceBidService extends HttpServlet {
         System.out.println(productId);
 
         User user = (User) req.getSession().getAttribute("user");
+        System.out.println("bid login user id :"+user.getId());
         System.out.println(user.getName());
         System.out.println(user.getEmail());
         remoteBidSave.placeBid(Integer.parseInt(productId),Double.parseDouble(bid),user.getId());

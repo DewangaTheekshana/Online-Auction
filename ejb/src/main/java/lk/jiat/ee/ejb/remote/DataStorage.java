@@ -11,6 +11,8 @@ public interface DataStorage {
     List<User> getUsers();
     List<Product> getProducts();
     Product getProductById(int id);
+    User getUserById(int userId);
+
 
     void replaceProducts(Product updatedProduct);
 }
