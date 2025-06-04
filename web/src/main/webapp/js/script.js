@@ -1,3 +1,6 @@
+let isAutoBidEnabled = false;
+var maxbidvalidation = 0;
+
 // Form submission
 const signinForm = document.getElementById('signinForm');
 
@@ -61,7 +64,7 @@ async function loadProduct() {
 
             ProductCloneHtml.querySelector("#product-image1").src = item.image;
             ProductCloneHtml.querySelector("#product-name").innerHTML = item.name;
-            ProductCloneHtml.querySelector("#product-bid-price").innerHTML = "$" + item.basePrice;
+            ProductCloneHtml.querySelector("#product-bid-price").innerHTML = "$" + item.maxBid;
             ProductCloneHtml.querySelector("#product-a1").href = "single_product.jsp?id=" + item.id;
 
             document.getElementById("product-main").appendChild(ProductCloneHtml);
@@ -102,14 +105,14 @@ function startCountdownForElement(endTime, elementId) {
 
 var pid = 0;
 
-async  function loadSingleProduct(){
+async function loadSingleProduct() {
 
     const parameters = new URLSearchParams(window.location.search);
 
     if (parameters.has("id")) {
         const productId = parameters.get("id");
 
-        const response = await  fetch("/ee-app/LoadToSingleProduct?id=" + productId);
+        const response = await fetch("/ee-app/LoadToSingleProduct?id=" + productId);
 
         if (response.ok) {
 
@@ -122,8 +125,30 @@ async  function loadSingleProduct(){
             document.getElementById("currunt-bid-price").innerHTML = "$" + json.product.maxBid;
             document.getElementById("currunt-bid-price1").innerHTML = "$" + json.product.maxBid;
             document.getElementById("manual-bid-amount").value = json.product.maxBid + 10;
+            document.getElementById("manual-bid-amount").min = json.product.maxBid;
             document.getElementById("messages").innerText = "Enter Your Bid (Minimum " + (json.product.maxBid + 10) + ")";
             pid = json.product.id;
+
+            maxbidvalidation = json.product.maxBid + 10;
+
+
+            const button = document.getElementById("autoBidButton");
+            if (json.autoBidEnabled) {
+                isAutoBidEnabled = true;
+                button.textContent = "Disable Auto-Bid";
+                button.classList.remove("btn-accent");
+                button.classList.add("btn-danger");
+                document.getElementById("auto-bid-amount").readOnly = true;
+                document.getElementById("auto-bid-amount").value = json.autoBidAmount;
+            } else {
+                isAutoBidEnabled = false;
+                button.textContent = "Activate Auto-Bid";
+                button.classList.remove("btn-danger");
+                button.classList.add("btn-accent");
+                document.getElementById("auto-bid-amount").readOnly = false;
+                document.getElementById("auto-bid-amount").value = json.autoBidAmount;
+
+            }
 
             const endTimeStr = json.product.endTime;
             console.log("Received endTime:", endTimeStr);
@@ -146,19 +171,22 @@ async  function loadSingleProduct(){
     const socket = new WebSocket(`ws://${window.location.host}/ee-app/bidsocket`);
 
 
-    socket.onopen = ()=>{
+    socket.onopen = () => {
         console.log("Connected to WebSocket");
     }
 
 // This is triggered when a message is received from the server
-    socket.onmessage = function(event) {
+    socket.onmessage = function (event) {
         const bid = JSON.parse(event.data);
         console.log("Message from server:", event.data);
-        console.log("socket on message"+ bid);
+        console.log("socket on message" + bid);
         document.getElementById("currunt-bid-price").innerText = "$" + bid.bidAmount;
         document.getElementById("currunt-bid-price1").innerText = "$" + bid.bidAmount;
         document.getElementById("manual-bid-amount").value = bid.bidAmount + 10;
+        document.getElementById("manual-bid-amount").min = bid.bidAmount;
         document.getElementById("messages").innerText = "Enter Your Bid (Minimum " + (bid.bidAmount + 10) + ")";
+
+        maxbidvalidation = bid.bidAmount + 10;
 
         const listItem = document.createElement("li");
         listItem.textContent = `User ${bid.userId} bid $${bid.bidAmount}`;
@@ -186,7 +214,7 @@ function loadBidHistory() {
 
             bids.forEach(bid => {
                 const date = new Date(bid.timestamp);
-                const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const time = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
                 const today = new Date().toDateString() === date.toDateString() ? "Today" : date.toLocaleDateString();
                 const formattedTime = `${today}, ${time}`;
 
@@ -217,29 +245,97 @@ function loadBidHistory() {
 }
 
 
-
 async function sendMessage() {
-
 
     const bidAmount = document.getElementById("manual-bid-amount").value;
     // const productId = 1; // Replace with actual product ID
 
-    const bidData = new URLSearchParams();
-    bidData.append("bidAmount", parseFloat(bidAmount));
-    bidData.append("productId", pid);
+    if (maxbidvalidation <= bidAmount) {
 
-    console.log(bidAmount);
+        const bidData = new URLSearchParams();
+        bidData.append("bidAmount", parseFloat(bidAmount));
+        bidData.append("productId", pid);
 
-    const response = await fetch("PlaceBidServlet", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: bidData.toString()
-    });
+        console.log(bidAmount);
 
-    const responseText = await response.text();
+        const response = await fetch("PlaceBidServlet", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: bidData.toString()
+        });
 
+        const responseText = await response.text();
+
+    } else {
+        alert("You Can Enter Minimum Bid ( $ " + maxbidvalidation + ")");
+    }
+
+
+}
+
+
+async function autoBidActive() {
+    const button = document.getElementById("autoBidButton");
+    const maxBid = document.getElementById("auto-bid-amount").value;
+
+    if (maxbidvalidation <= maxBid) {
+
+        if (!isAutoBidEnabled) {
+            button.textContent = "Disable Auto-Bid";
+            button.classList.remove("btn-accent");
+            button.classList.add("btn-danger");
+
+
+            const bidData = new URLSearchParams();
+            bidData.append("bid", parseFloat(maxBid));
+            bidData.append("productId", pid);
+
+            console.log(maxBid);
+
+            const response = await fetch("placeautobid", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: bidData.toString()
+            });
+
+            const responseText = await response.text();
+
+
+            document.getElementById("auto-bid-amount").readOnly = true;
+
+            alert(responseText);
+
+        }else {
+            button.textContent = "Activate Auto-Bid";
+            button.classList.remove("btn-danger");
+            button.classList.add("btn-accent");
+
+            const bidData1 = new URLSearchParams();
+            bidData1.append("productId", pid);
+
+            const response = await fetch("disableautobid", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: bidData1.toString()
+            });
+
+            const responseText = await response.text();
+
+            document.getElementById("auto-bid-amount").readOnly = false;
+
+            alert(responseText);
+        }
+        isAutoBidEnabled = !isAutoBidEnabled;
+
+    } else {
+        alert("You Can Enter Minimum Auto Bid ( $" + maxbidvalidation + ")")
+    }
 }
 
 
@@ -256,9 +352,13 @@ function startCountdown(endTime) {
             document.getElementById("seconds").textContent = "00";
             // document.getElementById("bidbutton").disabled = true;
             document.getElementById("bidbutton").style.backgroundColor = "#a1a09f";
-            document.getElementById("bidbutton").onclick = function() {
+            document.getElementById("bidbutton").onclick = function () {
                 alert("This Bid Event Expired");
-            };;
+            };
+            document.getElementById("autoBidButton").style.backgroundColor = "#a1a09f";
+            document.getElementById("autoBidButton").onclick = function () {
+                alert("This Bid Event Expired");
+            };
             return;
         }
 
@@ -277,6 +377,6 @@ function startCountdown(endTime) {
 }
 
 
-function notloging(){
+function notloging() {
     window.location = "./index.jsp";
 }

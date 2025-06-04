@@ -1,16 +1,29 @@
 package lk.jiat.ee.ejb.bean;
 
 import jakarta.ejb.ActivationConfigProperty;
+import jakarta.ejb.EJB;
 import jakarta.ejb.MessageDriven;
 import jakarta.jms.*;
+import lk.jiat.ee.core.model.AutoBid;
 import lk.jiat.ee.core.model.Bid;
+import lk.jiat.ee.core.model.Validate;
 import lk.jiat.ee.core.websocket.BidBroadcaster;
+import lk.jiat.ee.ejb.remote.DataStorage;
+import lk.jiat.ee.ejb.remote.RemoteBidSave;
+
+import java.util.List;
 
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/MyTopic"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "jakarta.jms.Topic")
 })
 public class BidNotificationBean implements MessageListener {
+
+    @EJB
+    DataStorage dataStorage;
+
+    @EJB
+    RemoteBidSave remoteBidSave;
 
     @Override
     public void onMessage(Message message) {
@@ -35,6 +48,24 @@ public class BidNotificationBean implements MessageListener {
 
                     // Broadcast to all connected WebSocket clients
                     BidBroadcaster.broadcast(notification);
+
+                    int userId = bid.getUserId();
+
+                    List<AutoBid> autoBidders = dataStorage.getAutoBiddersForProduct(bid.getProductId());
+
+                    for (AutoBid autoBidder : Validate.sortBid(autoBidders)) {
+
+                        if (userId == autoBidder.getUserId()) continue;
+                        System.out.println("Bidder: " + bid.getUserId()+" user"+autoBidder.getUserId());
+                        double nextBid = bid.getBidAmount() + 10;
+
+                        if (nextBid <= autoBidder.getMaxBid()){
+                            remoteBidSave.placeBid(bid.getProductId(),nextBid, autoBidder.getUserId());
+                            break;
+                        }
+
+                    }
+
                 } else {
                     System.out.println("Received JMS message is not a Bid instance.");
                 }

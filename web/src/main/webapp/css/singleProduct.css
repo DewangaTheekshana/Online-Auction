@@ -675,6 +675,11 @@ footer {
     background-color: #0056b3;
 }
 
+.btn-danger {
+    background-color: red;
+    color: white;
+}
+
 
 /* Responsive Design */
 @media (max-width: 992px) {

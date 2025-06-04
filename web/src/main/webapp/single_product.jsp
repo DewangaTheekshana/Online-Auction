@@ -164,12 +164,17 @@
                     <div class="bid-form">
                         <div class="form-group">
                             <label for="auto-bid-amount">Your Maximum Bid</label>
-                            <input type="number" id="auto-bid-amount" min="8700" value="10000">
+                            <input type="number" id="auto-bid-amount">
                             <div class="form-note">This is the maximum amount you're willing to pay</div>
                         </div>
                         <div class="bid-actions">
-                            <button class="btn btn-accent">Activate Auto-Bid</button>
+                            <% if (user == null) { %>
+                                <button class="btn btn-accent" id="autoBidButton" onclick="notloging();">Activate Auto-Bid</button>
+                            <% } else { %>
+                                <button class="btn btn-accent" id="autoBidButton" onclick="autoBidActive();">Activate Auto-Bid</button>
+                            <% } %>
                         </div>
+
                     </div>
                 </div>
             </div>

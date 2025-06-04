@@ -33,6 +33,9 @@ public class BidHistoryServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         if (product != null) {
+
+            product.getBidPlacedEvent().sort((b1, b2) -> Double.compare(b2.getBidAmount(), b1.getBidAmount()));
+
             List<Map<String, Object>> bidHistoryList = new ArrayList<>();
 
             for (Bid bid : product.getBidPlacedEvent()) {
