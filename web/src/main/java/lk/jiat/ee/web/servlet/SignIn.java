@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lk.jiat.ee.core.model.User;
-import lk.jiat.ee.ejb.remote.DataStorage;
+import lk.jiat.ee.ejb.remote.RemoteLogin;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 public class SignIn extends HttpServlet {
 
     @EJB
-    private DataStorage dataStorage;
+    RemoteLogin remoteLogin;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,21 +28,19 @@ public class SignIn extends HttpServlet {
         System.out.println(email);
         System.out.println(password);
 
-        List<User> users = dataStorage.getUsers();
+        boolean loginStatus = remoteLogin.validate(email, password);
 
-        User successUser = null;
+        System.out.println("Login Status Boolean "+loginStatus);
 
-        for (User user : users) {
-            if (user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) {
-                successUser = user;
-                break;
-            }
-        }
 
-        if (successUser != null) {
+        if (loginStatus) {
+
+            User user = remoteLogin.findUser(email);
+
+            System.out.println("Session Store Login Name : "+user.getName());
 
             HttpSession session = request.getSession();
-            session.setAttribute("user", successUser);
+            session.setAttribute("user", user);
 
             System.out.println(session.getAttribute("user"));
 

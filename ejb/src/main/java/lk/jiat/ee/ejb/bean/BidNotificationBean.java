@@ -28,7 +28,6 @@ public class BidNotificationBean implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            // Extract the Bid object from the message
             if (message instanceof ObjectMessage) {
                 ObjectMessage objMsg = (ObjectMessage) message;
                 Object obj = objMsg.getObject();
@@ -36,17 +35,11 @@ public class BidNotificationBean implements MessageListener {
                 if (obj instanceof Bid) {
                     Bid bid = (Bid) obj;
 
-                    System.out.println("Bid: " + bid.getUserId());
-
-                    // Create a simple message to send to clients
                     String notification = String.format(
                             "{\"productId\": %d, \"bidAmount\": %.2f, \"userId\": %d}",
                             bid.getProductId(), bid.getBidAmount(), bid.getUserId()
                     );
 
-                    System.out.println("Broadcasting: " + notification);
-
-                    // Broadcast to all connected WebSocket clients
                     BidBroadcaster.broadcast(notification);
 
                     int userId = bid.getUserId();

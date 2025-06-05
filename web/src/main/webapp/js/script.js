@@ -280,9 +280,10 @@ async function autoBidActive() {
     const button = document.getElementById("autoBidButton");
     const maxBid = document.getElementById("auto-bid-amount").value;
 
-    if (maxbidvalidation <= maxBid) {
 
-        if (!isAutoBidEnabled) {
+    if (!isAutoBidEnabled) {
+
+        if (maxbidvalidation <= maxBid) {
             button.textContent = "Disable Auto-Bid";
             button.classList.remove("btn-accent");
             button.classList.add("btn-danger");
@@ -309,33 +310,35 @@ async function autoBidActive() {
 
             alert(responseText);
 
-        }else {
-            button.textContent = "Activate Auto-Bid";
-            button.classList.remove("btn-danger");
-            button.classList.add("btn-accent");
 
-            const bidData1 = new URLSearchParams();
-            bidData1.append("productId", pid);
-
-            const response = await fetch("disableautobid", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: bidData1.toString()
-            });
-
-            const responseText = await response.text();
-
-            document.getElementById("auto-bid-amount").readOnly = false;
-
-            alert(responseText);
+        } else {
+            alert("You Can Enter Minimum Auto Bid ( $" + maxbidvalidation + ")")
         }
-        isAutoBidEnabled = !isAutoBidEnabled;
 
     } else {
-        alert("You Can Enter Minimum Auto Bid ( $" + maxbidvalidation + ")")
+        button.textContent = "Activate Auto-Bid";
+        button.classList.remove("btn-danger");
+        button.classList.add("btn-accent");
+
+        const bidData1 = new URLSearchParams();
+        bidData1.append("productId", pid);
+
+        const response = await fetch("disableautobid", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: bidData1.toString()
+        });
+
+        const responseText = await response.text();
+
+        document.getElementById("auto-bid-amount").readOnly = false;
+
+        alert(responseText);
     }
+    isAutoBidEnabled = !isAutoBidEnabled;
+
 }
 
 
