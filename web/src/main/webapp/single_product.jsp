@@ -26,11 +26,11 @@
     <div class="header-container">
         <div class="logo">
             <i class="fas fa-gavel"></i>
-            <span>BidMaster</span>
+            <span>BidZone</span>
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="home.jsp">Home</a></li>
                 <li><a href="#" class="active">Auctions</a></li>
                 <li><a href="#">Categories</a></li>
                 <li><a href="#">Contact</a></li>
@@ -236,12 +236,12 @@
             <ul class="footer-links">
                 <li><i class="fas fa-map-marker-alt"></i> 123 Auction St, New York, NY</li>
                 <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                <li><i class="fas fa-envelope"></i> info@bidmaster.com</li>
+                <li><i class="fas fa-envelope"></i> info@bidzone.com</li>
             </ul>
         </div>
     </div>
     <div class="copyright">
-        <p>&copy; 2023 BidMaster. All rights reserved.</p>
+        <p>&copy; 2023 BidZone. All rights reserved.</p>
     </div>
 </footer>
 

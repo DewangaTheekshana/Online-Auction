@@ -6,6 +6,7 @@ import jakarta.ejb.MessageDriven;
 import jakarta.jms.*;
 import lk.jiat.ee.core.model.AutoBid;
 import lk.jiat.ee.core.model.Bid;
+import lk.jiat.ee.core.model.Product;
 import lk.jiat.ee.core.model.Validate;
 import lk.jiat.ee.core.websocket.BidBroadcaster;
 import lk.jiat.ee.ejb.remote.DataStorage;

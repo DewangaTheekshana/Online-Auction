@@ -26,11 +26,11 @@
     <div class="header-container">
         <div class="logo">
             <i class="fas fa-gavel"></i>
-            <span>BidMaster</span>
+            <span>BidZone</span>
         </div>
         <nav>
             <ul>
-                <li><a href="#" class="active">Home</a></li>
+                <li><a href="home.jsp" class="active">Home</a></li>
                 <li><a href="#" id="view-auctions">Auctions</a></li>
                 <li><a href="#">Categories</a></li>
                 <li><a href="#">Contact</a></li>
@@ -85,10 +85,10 @@
                     <div class="time-left" id="product-time"><i class="fas fa-clock"></i></div>
                 </div>
                 <div class="card-content">
-                    <h3 class="card-title" id="product-name">Vintage Rolex Submariner</h3>
+                    <h3 class="card-title" id="product-name"></h3>
                     <div class="card-meta">
-                        <div class="current-bid" id="product-bid-price">$8,450</div>
-                        <div class="bids-count">24 Bids</div>
+                        <div class="current-bid" id="product-bid-price"></div>
+                        <div class="bids-count"></div>
                     </div>
                     <div class="card-actions">
                         <a href="#" id="product-a1" class="btn btn-card btn-primary" data-id="1">Place Bid</a>
@@ -201,12 +201,12 @@
             <ul class="footer-links">
                 <li><i class="fas fa-map-marker-alt"></i> 123 Auction St, New York, NY</li>
                 <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                <li><i class="fas fa-envelope"></i> info@bidmaster.com</li>
+                <li><i class="fas fa-envelope"></i> info@bidzone.com</li>
             </ul>
         </div>
     </div>
     <div class="copyright">
-        <p>&copy; 2023 BidMaster. All rights reserved.</p>
+        <p>&copy; 2023 BidZone. All rights reserved.</p>
     </div>
 </footer>
 

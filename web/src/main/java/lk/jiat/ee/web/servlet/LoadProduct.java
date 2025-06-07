@@ -29,15 +29,6 @@ public class LoadProduct extends HttpServlet {
         System.out.println(products);
 
         Gson gson = new Gson();
-
-//        for (Product product : products) {
-//                    product.getId();
-//                    product.getName();
-//                    product.getImage();
-//                    product.getBasePrice();
-//                    product.getEndTime();
-//        }
-
         JsonObject jsonObject = new JsonObject();
 
         jsonObject.add("productList", gson.toJsonTree(products));

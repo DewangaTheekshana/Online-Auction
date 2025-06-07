@@ -26,7 +26,6 @@ public class DataStorageBean implements DataStorage {
     public void init(){
 
         userList = new ArrayList<User>();
-
         autoBidMap = new ConcurrentHashMap<>();
 
         productList = new ArrayList<Product>();

@@ -61,7 +61,6 @@ async function loadProduct() {
 
             let ProductCloneHtml = ProductHtml.cloneNode(true);
 
-
             ProductCloneHtml.querySelector("#product-image1").src = item.image;
             ProductCloneHtml.querySelector("#product-name").innerHTML = item.name;
             ProductCloneHtml.querySelector("#product-bid-price").innerHTML = "$" + item.maxBid;
